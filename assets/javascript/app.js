@@ -1,46 +1,60 @@
 //have code run only when the page is ready
 $(document).ready(function() {
 
-    //create start button
-    $(".btn").on("click", function(){
-        //check that button works 
-        alert("I've been clicked!");
-    });
-    //create array with multiple choice questions and answer
-    const questions = [
-        {question: "How many national parks are in the USA?", answer: {a: "103", b: "58", c: "86", d: "162"}, correctAns: "b"}, 
-        {question: "What state is Sequoia National Park in?", answer: {a: "California", b: "Oregon", c: "Montana", d: "Washington"}, correctAns: "a"}, 
-        {question: "Where is the largest National park?", answer: {a: "Utah", b: "Florida", c: "California", d: "Alaska"}, correctAns: "d"}, 
-        {question: "El Capitan and Half Dome are iconic granite cliffs located in which national park?", answer: {a: "Sierra Nevada National Park",b: "Yosemite National Park", c: "Zion National Park", d: "Yellowstone National Park"}, correctAns: "b"} 
+//create array with questions, multiple choice answers, and correct answer 
+    var questions = [
+        {question: "How many national parks are in the USA?", answer: ["103", "58", "86", "162"], correctAns: "58"}, 
+        {question: "What state is Sequoia National Park in?", answer: ["California", "Oregon", "Montana", "Washington"], correctAns: "California"}, 
+        {question: "Where is the largest National park?", answer: ["Utah", "Florida", "California", "Alaska"], correctAns: "Alaska"}, 
+        {question: "El Capitan and Half Dome are iconic granite cliffs located in which national park?", answer: ["Sierra Nevada National Park", "Yosemite National Park", "Zion National Park", "Yellowstone National Park"], correctAns: "Yosemite National Park"} 
     ];
 
+    console.log(questions);
+
     // create variables
-    var score = 0,
-        correctQ = 0,
-        wrongQ = 0;
+    var correctQ = 0,
+        wrongQ = 0,
+        questionIndex = 0,
+        remainingTime = 100;
+        
 
+    //hide the start button after clicked
+    //onclick to display questions
 
-    //functions needed
-    //function to start the timer
-    function timerBegin (){
+    $("#startB").on("click", function () {
+        $("#startB").hide();
+        for (var i = 0; i < questions.length; i++) {
+          $("#questions").append("<h4>" + questions[i].question + "</h4>")
+          for (var j = 0; j < questions[i].answer.length; j++) {
+            $("#questions").append("<input type = 'radio' name='question-" + i + " ' value=' " + questions[i].answer[j] + " '> " + questions[i].answer[j])
+          }
+        }
+        displayClock();
+    
+        counter = setInterval(displayClock, 1000);
+
+        //start countdown
+        function displayClock(){
+            remainingTime--;
+            $("#timer").text("Remaining time: " + remainingTime);
+            if (remainingTime === 0){
+                clearInterval(counter)
+            }
+        };
+    });
+
+    //function to check the answers for correctness
+    function ansCheck (){
 
     };
     
-    //function to display the game
-    function beginGame (){
-
-    };
-
     //function to reset the game
 
     function reset (){
 
     };
 
-    //function to check the answers for correctness
-    function ansCheck (){
-
-    };
+    
 });
 
 //event to capture the users answer choice for each question
